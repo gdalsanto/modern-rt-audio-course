@@ -10,6 +10,10 @@
         <FILE id="EWHlUy" name="Biquad.h" compile="0" resource="0" file="../../dsp/Biquad.h"/>
         <FILE id="I939jR" name="DelayLine.cpp" compile="1" resource="0" file="../../dsp/DelayLine.cpp"/>
         <FILE id="RZCIdr" name="DelayLine.h" compile="0" resource="0" file="../../dsp/DelayLine.h"/>
+        <FILE id="dxorI2" name="FancyDelayLine.cpp" compile="1" resource="0"
+              file="../../dsp/FancyDelayLine.cpp"/>
+        <FILE id="vtAroc" name="FancyDelayLine.h" compile="0" resource="0"
+              file="../../dsp/FancyDelayLine.h"/>
         <FILE id="DkQcfO" name="Flanger.cpp" compile="1" resource="0" file="../../dsp/Flanger.cpp"/>
         <FILE id="NBDjl5" name="Flanger.h" compile="0" resource="0" file="../../dsp/Flanger.h"/>
         <FILE id="CbmRb9" name="ParametricEqualizer.cpp" compile="1" resource="0"
