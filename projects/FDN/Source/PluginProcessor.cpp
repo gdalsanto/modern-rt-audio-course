@@ -9,18 +9,10 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+static const std::vector<mrta::ParameterInfo> ParameterInfos;
 //==============================================================================
-FDNAudioProcessor::FDNAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       )
-#endif
+
+FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos)
 {
 }
 

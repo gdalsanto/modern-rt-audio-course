@@ -32,7 +32,8 @@ public:
    #endif
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-
+    
+    mrta::ParameterManager& getParameterManager() {return parameterManager;}
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
@@ -57,6 +58,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    mrta::ParameterManager parameterManager;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FDNAudioProcessor)
 };
