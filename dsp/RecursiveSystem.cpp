@@ -99,7 +99,8 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
         x[1] = x[0];
 
         // Process delay
-        delayLine.process(feedbackStateA, x, lfo, numChannels);
+        float feedbackState[2] { feedbackStateA[0], feedbackStateB[0] };
+        delayLine.process(feedbackState, x, lfo, numChannels);
 
         // Write to output buffers
         output[0][n] = feedbackStateA[0];
