@@ -89,7 +89,7 @@ void Flanger::process(float* const* output, const float* const* input, unsigned 
             x[ch] = input[ch][n] + feedbackState[ch];
 
         // Process delay
-        delayLine.process(feedbackState, x, lfo, numChannels, numSamples);
+        delayLine.process(feedbackState, x, lfo, numChannels);
 
         // Write to output buffers
         for (unsigned int ch = 0; ch < numChannels; ++ch)

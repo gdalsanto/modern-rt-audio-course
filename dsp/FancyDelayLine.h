@@ -31,6 +31,9 @@ public:
     void process(float* const* audioOutput, const float* const* audioInput, const float* const* modInput,
                  unsigned int numChannels, unsigned int numSamples);
 
+    // Single sample flavour of the modulated delay time processing
+    void process(float* audioOutput, const float* audioInput, const float* modInput, unsigned int numChannels);
+
     
     // Set the current delay time in samples
     void setDelaySamples(unsigned int samplesA, unsigned int samplesB);
@@ -41,6 +44,9 @@ private:
     unsigned int delaySamplesB { 0 };
     unsigned int writeIndexA { 0 };
     unsigned int writeIndexB { 0 };
+    
+    unsigned int delaySamples { 0 };
+    unsigned int writeIndex { 0 };
     
 };
 }
