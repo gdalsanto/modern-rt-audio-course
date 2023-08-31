@@ -29,9 +29,13 @@ void FancyDelayLine::prepare(unsigned int maxLengthSamples, unsigned int numChan
 }
 
 
-void FancyDelayLine::setDelaySamples(unsigned int newDelaySamplesA, unsigned int newDelaySamplesB)
+void FancyDelayLine::setDelaySamplesA(unsigned int newDelaySamplesA)
 {
     delaySamplesA = std::max(std::min(newDelaySamplesA, static_cast<unsigned int>(delayBuffer[0].size() - 1u)), 1u);
+
+}
+void FancyDelayLine::setDelaySamplesB(unsigned int newDelaySamplesB)
+{
     delaySamplesB = std::max(std::min(newDelaySamplesB, static_cast<unsigned int>(delayBuffer[0].size() - 1u)), 1u);
 
 }

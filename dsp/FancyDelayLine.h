@@ -31,8 +31,9 @@ public:
     void process(float* audioOutput, const float* audioInput, const float* modInput, unsigned int numChannels);
 
     // Set the current delay time in samples
-    void setDelaySamples(unsigned int samplesA, unsigned int samplesB);
-    
+    void setDelaySamplesA(unsigned int samplesA);
+    void setDelaySamplesB(unsigned int samplesB);
+
 private:
     std::vector<std::vector<float>> delayBuffer;
     unsigned int delaySamplesA { 0 };

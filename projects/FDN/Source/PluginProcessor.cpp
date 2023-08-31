@@ -14,8 +14,6 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
     { Param::ID::Enabled, Param::Name::Enabled, Param::Ranges::EnabledOff, Param::Ranges::EnabledOn, true},
     { Param::ID::Time_L,  Param::Name::Time_L, Param::Units::ms, 500.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
     { Param::ID::Time_R,  Param::Name::Time_R, Param::Units::ms, 1000.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
-    { Param::ID::Offset_L,  Param::Name::Offset_L, Param::Units::ms, 1.f, Param::Ranges::OffsetMin, Param::Ranges::OffsetMax, Param::Ranges::OffsetInc, Param::Ranges::OffsetSkw },
-    { Param::ID::Offset_R,  Param::Name::Offset_R, Param::Units::ms, 500.f, Param::Ranges::OffsetMin, Param::Ranges::OffsetMax, Param::Ranges::OffsetInc, Param::Ranges::OffsetSkw },
     { Param::ID::Feedback_Gain_R,  Param::Name::Feedback_Gain_L, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
     { Param::ID::Feedback_Gain_L,  Param::Name::Feedback_Gain_R, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw }
 };
@@ -32,32 +30,22 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
     parameterManager.registerParameterCallback(Param::ID::Time_L,
         [this](float newValue, bool /*force*/)
         {
-            recSys.setTime_L(newValue);
+            recSys.setDelaySamplesA(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Time_L,
         [this](float newValue, bool /*force*/)
         {
-            recSys.setTime_R(newValue);
-        });
-    parameterManager.registerParameterCallback(Param::ID::Offset_L,
-        [this](float newValue, bool /*force*/)
-        {
-            recSys.setOffset_L(newValue);
-        });
-    parameterManager.registerParameterCallback(Param::ID::Offset_R,
-        [this](float newValue, bool /*force*/)
-        {
-            recSys.setOffset_R(newValue);
+            recSys.setDelaySamplesB(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
         [this](float newValue, bool /*force*/)
         {
-            recSys.setFeedbackGain_L(newValue);
+            recSys.setFeedbackGainA(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_R,
         [this](float newValue, bool /*force*/)
         {
-            recSys.setFeedbackGain_R(newValue);
+            recSys.setFeedbackGainB(newValue);
         });
 }
 

@@ -22,10 +22,10 @@ void RecursiveSystem::prepare(double newSampleRate, float maxTimeMs, unsigned in
     sampleRate = newSampleRate;
 
     delayLine.prepare(static_cast<unsigned int>(std::round(maxTimeMs * static_cast<float>(D_SIZE * sampleRate))), numChannels);
-    delayLine.setDelaySamples(
-                              static_cast<unsigned int>(std::ceil(0.001 * sampleRate)),
-                              static_cast<unsigned int>(std::ceil(0.0013 * sampleRate))); // Set fixed delay to 1ms
-
+    
+    // set fixed delay time to max
+    delayLine.setDelaySamplesA(static_cast<unsigned int>(std::ceil(D_SIZE * sampleRate)));
+    delayLine.setDelaySamplesB(static_cast<unsigned int>(std::ceil(D_SIZE * sampleRate)));
     offsetRamp.prepare(sampleRate, true, offsetMs * static_cast<float>(D_SIZE * sampleRate));
     modDepthRamp.prepare(sampleRate, true, modDepthMs * static_cast<float>(D_SIZE * sampleRate));
     feedbackRampA.prepare(sampleRate, true, feedbackA);
@@ -141,6 +141,14 @@ void RecursiveSystem::setModulationRate(float newModRateHz)
 void RecursiveSystem::setModulationType(ModulationType newModType)
 {
     modType = newModType;
+}
+void RecursiveSystem::setDelaySamplesA(unsigned int newDelaySamplesA)
+{
+    delayLine.setDelaySamplesA(newDelaySamplesA);
+}
+void RecursiveSystem::setDelaySamplesB(unsigned int newDelaySamplesB)
+{
+    delayLine.setDelaySamplesB(newDelaySamplesB);
 }
 
 }

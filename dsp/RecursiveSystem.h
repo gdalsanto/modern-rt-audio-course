@@ -54,14 +54,11 @@ public:
     // Set delay time modulation waveform type
     void setModulationType(ModulationType newModType);
     
-    void setTime_L(float newTime) {};
-    void setTime_R(float newTime) {};
+    void setDelaySamplesA(unsigned int samplesA);
+    void setDelaySamplesB(unsigned int samplesB);
     
-    void setOffset_L(float newOffset) {};
-    void setOffset_R(float newOffset) {};
-    
-    void setFeedbackGain_L(float newGain) {};
-    void setFeedbackGain_R(float newGain) {};
+    void setFeedbackGainA(float newGain) {};
+    void setFeedbackGainB(float newGain) {};
 
 private:
     double sampleRate { 48000.0 };
