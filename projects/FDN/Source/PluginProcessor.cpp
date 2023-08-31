@@ -149,6 +149,7 @@ void FDNAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
+/*
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool FDNAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
@@ -174,6 +175,7 @@ bool FDNAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) cons
   #endif
 }
 #endif
+ */
 
 void FDNAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
