@@ -21,7 +21,8 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
 };
 //==============================================================================
 
-FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), flanger(20.f,2), enableRamp(0.05f)
+
+FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), recSys(20.f, 2), enableRamp(0.05f)
 {
     parameterManager.registerParameterCallback(Param::ID::Enabled,
         [this](float newValue, bool force)
@@ -31,32 +32,32 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
     parameterManager.registerParameterCallback(Param::ID::Time_L,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setTime_L(newValue);
+            recSys.setTime_L(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Time_L,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setTime_R(newValue);
+            recSys.setTime_R(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Offset_L,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setOffset_L(newValue);
+            recSys.setOffset_L(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Offset_R,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setOffset_R(newValue);
+            recSys.setOffset_R(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setFeedbackGain_L(newValue);
+            recSys.setFeedbackGain_L(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_R,
         [this](float newValue, bool /*force*/)
         {
-            flanger.setFeedbackGain_R(newValue);
+            recSys.setFeedbackGain_R(newValue);
         });
 }
 
@@ -133,7 +134,7 @@ void FDNAudioProcessor::prepareToPlay (double newSampleRate, int samplesPerBlock
     // initialisation that you need..
     const unsigned int numChannels { static_cast<unsigned int>(std::max(getMainBusNumInputChannels(), getMainBusNumOutputChannels())) };
 
-    flanger.prepare(newSampleRate, 20.f, numChannels);
+    recSys.prepare(newSampleRate, 20.f, numChannels);
     enableRamp.prepare(newSampleRate);
 
     parameterManager.updateParameters(true);
@@ -185,7 +186,7 @@ void FDNAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::Mi
     for (int ch = 0; ch < static_cast<int>(numChannels); ++ch)
         fxBuffer.copyFrom(ch, 0, buffer, ch, 0, static_cast<int>(numSamples));
 
-    flanger.process(fxBuffer.getArrayOfWritePointers(), fxBuffer.getArrayOfReadPointers(), numChannels, numSamples);
+    recSys.process(fxBuffer.getArrayOfWritePointers(), fxBuffer.getArrayOfReadPointers(), numChannels, numSamples);
     enableRamp.applyGain(fxBuffer.getArrayOfWritePointers(), numChannels, numSamples);
 
     for (int ch = 0; ch < static_cast<int>(numChannels); ++ch)

@@ -11,9 +11,7 @@
 #include <JuceHeader.h>
 
 #include "FancyDelayLine.h"
-
-
-#include "Flanger.h"
+#include "RecursiveSystem.h"
 
 namespace Param
 {
@@ -124,8 +122,8 @@ public:
 
 private:
     mrta::ParameterManager parameterManager;
-    mrta::Flanger flanger;
     //mrta::FancyDelayLine fancyDelayLine;
+    mrta::RecursiveSystem recSys;
     mrta::Ramp<float> enableRamp;
 
     juce::AudioBuffer<float> fxBuffer;
