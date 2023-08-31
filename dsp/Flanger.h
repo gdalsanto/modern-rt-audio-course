@@ -1,6 +1,7 @@
 #pragma once
 
-#include "DelayLine.h"
+#include "FancyDelayLine.h"
+
 #include "Ramp.h"
 
 namespace mrta
@@ -57,7 +58,7 @@ public:
 private:
     double sampleRate { 48000.0 };
 
-    mrta::DelayLine delayLine;
+    mrta::FancyDelayLine delayLine;
 
     mrta::Ramp<float> offsetRamp;
     mrta::Ramp<float> modDepthRamp;

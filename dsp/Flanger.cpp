@@ -27,7 +27,7 @@ void Flanger::prepare(double newSampleRate, float maxTimeMs, unsigned int numCha
     sampleRate = newSampleRate;
 
     delayLine.prepare(static_cast<unsigned int>(std::round(maxTimeMs * static_cast<float>(0.001 * sampleRate))), numChannels);
-    delayLine.setDelaySamples(static_cast<unsigned int>(std::ceil(0.001 * sampleRate))); // Set fixed delay to 1ms
+    delayLine.setDelaySamples(static_cast<unsigned int>(std::ceil(0.001 * sampleRate)), static_cast<unsigned int>(std::ceil(0.001 * sampleRate))); // Set fixed delay to 1ms
 
     offsetRamp.prepare(sampleRate, true, offsetMs * static_cast<float>(0.001 * sampleRate));
     modDepthRamp.prepare(sampleRate, true, modDepthMs * static_cast<float>(0.001 * sampleRate));
@@ -89,7 +89,7 @@ void Flanger::process(float* const* output, const float* const* input, unsigned 
             x[ch] = input[ch][n] + feedbackState[ch];
 
         // Process delay
-        delayLine.process(feedbackState, x, lfo, numChannels);
+        delayLine.process(feedbackState, x, lfo, numChannels, numSamples);
 
         // Write to output buffers
         for (unsigned int ch = 0; ch < numChannels; ++ch)

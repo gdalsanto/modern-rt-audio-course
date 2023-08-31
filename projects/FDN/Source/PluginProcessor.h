@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "Flanger.h"
 
 //==============================================================================
 /**
@@ -56,9 +57,19 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    
+    static const unsigned int MaxDelaySizeSamples { 1 << 12 };
+    static const unsigned int MaxChannels { 2 };
+    static const unsigned int MaxProcessBlockSamples{ 32 };
+
 
 private:
     mrta::ParameterManager parameterManager;
+    mrta::Flanger flanger;
+    mrta::Ramp<float> enableRamp;
+
+    juce::AudioBuffer<float> fxBuffer;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FDNAudioProcessor)
 };
