@@ -46,7 +46,8 @@ public:
     void setDepth(float newDepthMs);
 
     // Set feedback to delay line, normalised [-1; 1]
-    void setFeedback(float newFeedbackA, float newFeedbackB);
+    void setFeedbackGainA(float newFeedbackA);
+    void setFeedbackGainB(float newFeedbackB);
 
     // Set delay time modsulation rate in Hz
     void setModulationRate(float newModRateHz);
@@ -56,9 +57,6 @@ public:
     
     void setDelaySamplesA(unsigned int samplesA);
     void setDelaySamplesB(unsigned int samplesB);
-    
-    void setFeedbackGainA(float newGain) {};
-    void setFeedbackGainB(float newGain) {};
 
 private:
     double sampleRate { 48000.0 };
