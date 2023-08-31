@@ -125,6 +125,7 @@ public:
 private:
     mrta::ParameterManager parameterManager;
     mrta::Flanger flanger;
+    //mrta::FancyDelayLine fancyDelayLine;
     mrta::Ramp<float> enableRamp;
 
     juce::AudioBuffer<float> fxBuffer;

@@ -21,12 +21,42 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
 };
 //==============================================================================
 
-FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), flanger(20.f, 2), enableRamp(0.05f)
+FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), flanger(20.f,2), enableRamp(0.05f)
 {
     parameterManager.registerParameterCallback(Param::ID::Enabled,
         [this](float newValue, bool force)
         {
             enableRamp.setTarget(std::fmin(std::fmax(newValue, 0.f), 1.f), force);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Time_L,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setTime_L(newValue);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Time_L,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setTime_R(newValue);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Offset_L,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setOffset_L(newValue);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Offset_R,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setOffset_R(newValue);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setFeedbackGain_L(newValue);
+        });
+    parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_R,
+        [this](float newValue, bool /*force*/)
+        {
+            flanger.setFeedbackGain_R(newValue);
         });
 }
 
