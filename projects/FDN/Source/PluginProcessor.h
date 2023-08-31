@@ -9,7 +9,63 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "FancyDelayLine.h"
+#include "Flanger.h"
 
+namespace Param
+{
+    namespace ID
+    {
+        static const juce::String Enabled { "enabled" };
+        static const juce::String Time_L { "time_l" };
+        static const juce::String Time_R { "time_r" };
+        static const juce::String Offset_L { "offset_l" };
+        static const juce::String Offset_R { "offset_r" };
+        static const juce::String Feedback_Gain_L { "feedback_gain_l" };
+        static const juce::String Feedback_Gain_R { "feedback_gain_r" };
+
+    }
+
+    namespace Name
+    {
+        static const juce::String Enabled{ "Enabled" };
+        static const juce::String Time_L{ "Time L" };
+        static const juce::String Time_R{ "Time R" };
+        static const juce::String Offset_L{ "Offset L" };
+        static const juce::String Offset_R{ "Offset R" };
+        static const juce::String Feedback_Gain_L{ "Feedback Gain L" };
+        static const juce::String Feedback_Gain_R{ "Feedback Gain R" };
+
+    }
+
+    namespace Ranges
+    {
+        static constexpr float OffsetMin { 1.f };
+        static constexpr float OffsetMax { 2000.f };
+        static constexpr float OffsetInc { 0.1f };
+        static constexpr float OffsetSkw { 0.5f };
+
+        static constexpr float FeedbackMin { -100.f };
+        static constexpr float FeedbackMax { 100.f };
+        static constexpr float FeedbackInc { 0.1f };
+        static constexpr float FeedbackSkw { 1.f };
+
+        static constexpr float TimeMin{ 20.f };
+        static constexpr float TimeMax{ 2000.f };
+        static constexpr float TimeInc{ 1.f };
+        static constexpr float TimeSkw{ 0.5f };
+
+        static const juce::String EnabledOff { "Off" };
+        static const juce::String EnabledOn { "On" };
+    }
+
+    namespace Units
+    {
+        static const juce::String ms { "ms" };
+        static const juce::String hz { "Hz" };
+        static const juce::String Pct { "%" };
+    }
+}
 //==============================================================================
 /**
 */
@@ -59,6 +115,10 @@ public:
 
 private:
     mrta::ParameterManager parameterManager;
+    mrta::Flanger flanger;
+    mrta::Ramp<float> enableRamp;
+
+    juce::AudioBuffer<float> fxBuffer;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FDNAudioProcessor)
 };

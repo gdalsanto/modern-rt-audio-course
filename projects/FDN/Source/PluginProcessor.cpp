@@ -9,11 +9,25 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-static const std::vector<mrta::ParameterInfo> ParameterInfos;
+static const std::vector<mrta::ParameterInfo> ParameterInfos
+{
+    { Param::ID::Enabled, Param::Name::Enabled, Param::Ranges::EnabledOff, Param::Ranges::EnabledOn, true},
+    { Param::ID::Time_L,  Param::Name::Time_L, Param::Units::ms, 500.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
+    { Param::ID::Time_R,  Param::Name::Time_R, Param::Units::ms, 1000.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
+    { Param::ID::Offset_L,  Param::Name::Offset_L, Param::Units::ms, 1.f, Param::Ranges::OffsetMin, Param::Ranges::OffsetMax, Param::Ranges::OffsetInc, Param::Ranges::OffsetSkw },
+    { Param::ID::Offset_R,  Param::Name::Offset_R, Param::Units::ms, 500.f, Param::Ranges::OffsetMin, Param::Ranges::OffsetMax, Param::Ranges::OffsetInc, Param::Ranges::OffsetSkw },
+    { Param::ID::Feedback_Gain_R,  Param::Name::Feedback_Gain_L, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
+    { Param::ID::Feedback_Gain_L,  Param::Name::Feedback_Gain_R, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw }
+};
 //==============================================================================
 
-FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos)
+FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), flanger(20.f, 2), enableRamp(0.05f)
 {
+    parameterManager.registerParameterCallback(Param::ID::Enabled,
+        [this](float newValue, bool force)
+        {
+            enableRamp.setTarget(std::fmin(std::fmax(newValue, 0.f), 1.f), force);
+        });
 }
 
 FDNAudioProcessor::~FDNAudioProcessor()
