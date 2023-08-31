@@ -9,7 +9,10 @@
 #pragma once
 
 #include <JuceHeader.h>
+
 #include "FancyDelayLine.h"
+
+
 #include "Flanger.h"
 
 namespace Param
@@ -112,6 +115,12 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    
+    static const unsigned int MaxDelaySizeSamples { 1 << 12 };
+    static const unsigned int MaxChannels { 2 };
+    static const unsigned int MaxProcessBlockSamples{ 32 };
+
 
 private:
     mrta::ParameterManager parameterManager;

@@ -21,6 +21,10 @@
         <FILE id="mYNm5Z" name="ParametricEqualizer.h" compile="0" resource="0"
               file="../../dsp/ParametricEqualizer.h"/>
         <FILE id="kLC7vU" name="Ramp.h" compile="0" resource="0" file="../../dsp/Ramp.h"/>
+        <FILE id="rEsGdu" name="RecursiveSystem.cpp" compile="1" resource="0"
+              file="../../dsp/RecursiveSystem.cpp"/>
+        <FILE id="dctrh7" name="RecursiveSystem.h" compile="0" resource="0"
+              file="../../dsp/RecursiveSystem.h"/>
         <FILE id="tfLnug" name="RingMod.cpp" compile="1" resource="0" file="../../dsp/RingMod.cpp"/>
         <FILE id="PuLTha" name="RingMod.h" compile="0" resource="0" file="../../dsp/RingMod.h"/>
       </GROUP>
