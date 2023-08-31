@@ -55,8 +55,8 @@ public:
     // Set delay time modulation waveform type
     void setModulationType(ModulationType newModType);
     
-    void setDelaySamplesA(unsigned int samplesA);
-    void setDelaySamplesB(unsigned int samplesB);
+    void setDelaySamplesA(float time);
+    void setDelaySamplesB(float time);
 
 private:
     double sampleRate { 48000.0 };

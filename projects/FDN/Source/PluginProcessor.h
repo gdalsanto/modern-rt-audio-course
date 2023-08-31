@@ -20,8 +20,6 @@ namespace Param
         static const juce::String Enabled { "enabled" };
         static const juce::String Time_L { "time_l" };
         static const juce::String Time_R { "time_r" };
-        static const juce::String Offset_L { "offset_l" };
-        static const juce::String Offset_R { "offset_r" };
         static const juce::String Feedback_Gain_L { "feedback_gain_l" };
         static const juce::String Feedback_Gain_R { "feedback_gain_r" };
 
@@ -32,8 +30,6 @@ namespace Param
         static const juce::String Enabled{ "Enabled" };
         static const juce::String Time_L{ "Time L" };
         static const juce::String Time_R{ "Time R" };
-        static const juce::String Offset_L{ "Offset L" };
-        static const juce::String Offset_R{ "Offset R" };
         static const juce::String Feedback_Gain_L{ "Feedback Gain L" };
         static const juce::String Feedback_Gain_R{ "Feedback Gain R" };
 
@@ -46,8 +42,8 @@ namespace Param
         static constexpr float OffsetInc { 0.1f };
         static constexpr float OffsetSkw { 0.5f };
 
-        static constexpr float FeedbackMin { -100.f };
-        static constexpr float FeedbackMax { 100.f };
+        static constexpr float FeedbackMin { -1.f };
+        static constexpr float FeedbackMax { 1.f };
         static constexpr float FeedbackInc { 0.1f };
         static constexpr float FeedbackSkw { 1.f };
 
@@ -64,7 +60,7 @@ namespace Param
     {
         static const juce::String ms { "ms" };
         static const juce::String hz { "Hz" };
-        static const juce::String Pct { "%" };
+        static const juce::String none { " " };
     }
 }
 //==============================================================================

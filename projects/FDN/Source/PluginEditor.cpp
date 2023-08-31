@@ -15,7 +15,7 @@ FDNAudioProcessorEditor::FDNAudioProcessorEditor (FDNAudioProcessor& p)
 {
     int height = static_cast<int>(audioProcessor.getParameterManager().getParameters().size())
         * genericParameterEditor.parameterWidgetHeight;
-    setSize (400, 300);
+    setSize (400, height);
     addAndMakeVisible(genericParameterEditor);
 }
 

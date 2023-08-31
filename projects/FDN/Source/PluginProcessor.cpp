@@ -14,8 +14,8 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
     { Param::ID::Enabled, Param::Name::Enabled, Param::Ranges::EnabledOff, Param::Ranges::EnabledOn, true},
     { Param::ID::Time_L,  Param::Name::Time_L, Param::Units::ms, 500.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
     { Param::ID::Time_R,  Param::Name::Time_R, Param::Units::ms, 1000.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
-    { Param::ID::Feedback_Gain_R,  Param::Name::Feedback_Gain_L, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
-    { Param::ID::Feedback_Gain_L,  Param::Name::Feedback_Gain_R, Param::Units::Pct, 20.f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw }
+    { Param::ID::Feedback_Gain_R,  Param::Name::Feedback_Gain_L, Param::Units::none, 0.2f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
+    { Param::ID::Feedback_Gain_L,  Param::Name::Feedback_Gain_R, Param::Units::none, 0.2f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw }
 };
 //==============================================================================
 

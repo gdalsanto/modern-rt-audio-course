@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\dependencies",
+    "\\dependencies\\JUCE",
+    "\\dsp",
+    "\\projects",
+    "\\projects\\FDN",
+    "\\projects\\FDN\\Source"
+  ],
+  "SelectedNode": "\\dsp\\RecursiveSystem.h",
+  "PreviewInSolutionExplorer": false
+}
