@@ -148,13 +148,13 @@ void RecursiveSystem::setModulationType(ModulationType newModType)
 }
 void RecursiveSystem::setDelaySamplesA(float time)
 {
-    int newDelaySamplesA = static_cast<int>(time * sampleRate);
+    int newDelaySamplesA = static_cast<int>(time/1000 * sampleRate);
     
     delayLine.setDelaySamplesA(newDelaySamplesA);
 }
 void RecursiveSystem::setDelaySamplesB(float time)
 {
-    int newDelaySamplesB = static_cast<int>(time * sampleRate);
+    int newDelaySamplesB = static_cast<int>(time/1000 * sampleRate);
 
     delayLine.setDelaySamplesB(newDelaySamplesB);
 }

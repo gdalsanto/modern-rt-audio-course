@@ -25,16 +25,19 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
     parameterManager.registerParameterCallback(Param::ID::Enabled,
         [this](float newValue, bool force)
         {
+            DBG(Param::Name::Enabled + ": " + juce::String{ newValue });
             enableRamp.setTarget(std::fmin(std::fmax(newValue, 0.f), 1.f), force);
         });
     parameterManager.registerParameterCallback(Param::ID::Time_L,
         [this](float newValue, bool /*force*/)
         {
+            DBG(Param::Name::Time_L + ": " + juce::String{ newValue });
             recSys.setDelaySamplesA(newValue);
         });
-    parameterManager.registerParameterCallback(Param::ID::Time_L,
+    parameterManager.registerParameterCallback(Param::ID::Time_R,
         [this](float newValue, bool /*force*/)
         {
+            DBG(Param::Name::Time_R + ": " + juce::String{ newValue });
             recSys.setDelaySamplesB(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
