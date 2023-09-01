@@ -67,6 +67,12 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
             DBG(Param::Name::Crossfeed + ": " + juce::String{ newValue });
             recSys.setDelayCrossFeed(newValue);
         });
+    parameterManager.registerParameterCallback(Param::ID::Depth,
+        [this](float newValue, bool /*force*/)
+        {
+            DBG(Param::Name::Depth + ": " + juce::String{ newValue });
+            recSys.setDepth(newValue);
+        });
 }
 
 FDNAudioProcessor::~FDNAudioProcessor()
