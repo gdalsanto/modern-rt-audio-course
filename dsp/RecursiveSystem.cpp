@@ -148,13 +148,13 @@ void RecursiveSystem::setDepth(float newDepthMs)
 
 void RecursiveSystem::setFeedbackGainA(float newFeedbackA)
 {
-    feedbackA = std::fmin(std::fmax(newFeedbackA, -1.f), 1.f);
+    feedbackA = std::fmin(std::fmax(newFeedbackA, -0.99f), 1.f);
     feedbackRampA.setTarget(feedbackA);
 }
 
 void RecursiveSystem::setFeedbackGainB(float newFeedbackB)
 {
-    feedbackB = std::fmin(std::fmax(newFeedbackB, -1.f), 1.f);
+    feedbackB = std::fmin(std::fmax(newFeedbackB, -0.99f), 1.f);
     feedbackRampB.setTarget(feedbackB);
 }
 
