@@ -2,8 +2,7 @@
 
 <JUCERPROJECT id="iZYsaA" name="FDN" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              headerPath="../../../../dsp&#10;../../../../dependencies/asiosdk/common"
-              pluginChannelConfigs="{2, 2}">
+              headerPath="../../../../dsp&#10;../../../../dependencies/asiosdk/common">
   <MAINGROUP id="ET8keM" name="FDN">
     <GROUP id="{40FDCD4E-BDC6-CD8A-4E54-508CC29B496B}" name="dsp">
       <GROUP id="{7992DC29-20E8-3C2D-4B43-556C3C28C088}" name="dsp">

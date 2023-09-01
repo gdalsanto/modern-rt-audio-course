@@ -22,6 +22,7 @@ namespace Param
         static const juce::String Time_R { "time_r" };
         static const juce::String Feedback_Gain_L { "feedback_gain_l" };
         static const juce::String Feedback_Gain_R { "feedback_gain_r" };
+        static const juce::String Mod_Type { "mod_type" };
 
     }
 
@@ -32,15 +33,12 @@ namespace Param
         static const juce::String Time_R{ "Time R" };
         static const juce::String Feedback_Gain_L{ "Feedback Gain L" };
         static const juce::String Feedback_Gain_R{ "Feedback Gain R" };
+        static const juce::String Mod_Type { "Modulation Type" };
 
     }
 
     namespace Ranges
     {
-        static constexpr float OffsetMin { 1.f };
-        static constexpr float OffsetMax { 2000.f };
-        static constexpr float OffsetInc { 0.1f };
-        static constexpr float OffsetSkw { 0.5f };
 
         static constexpr float FeedbackMin { -1.f };
         static constexpr float FeedbackMax { 1.f };
@@ -54,6 +52,8 @@ namespace Param
 
         static const juce::String EnabledOff { "Off" };
         static const juce::String EnabledOn { "On" };
+
+        static const juce::StringArray ModLabels{ "Sine", "Triangle", "Sawtooth" };
     }
 
     namespace Units
