@@ -118,7 +118,7 @@ void RecursiveSystem::setOffsetA(float newOffsetMs)
     // Since the fixed delay is set to 1ms
     // We can deduct that from the offset ramp
     offsetAMs = std::fmax(newOffsetMs - 1.f, 0.f);
-    offsetARamp.setTarget(offsetAMs * static_cast<float>(D_SIZE * sampleRate));
+    offsetARamp.setTarget(offsetAMs * static_cast<float>(0.001 * sampleRate));
 }
 
 void RecursiveSystem::setOffsetB(float newOffsetMs)
@@ -126,7 +126,7 @@ void RecursiveSystem::setOffsetB(float newOffsetMs)
     // Since the fixed delay is set to 1ms
     // We can deduct that from the offset ramp
     offsetBMs = std::fmax(newOffsetMs - 1.f, 0.f);
-    offsetBRamp.setTarget(offsetAMs * static_cast<float>(D_SIZE * sampleRate));
+    offsetBRamp.setTarget(offsetAMs * static_cast<float>(0.001 * sampleRate));
 }
 
 void RecursiveSystem::setDepth(float newDepthMs)
