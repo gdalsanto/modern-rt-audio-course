@@ -45,7 +45,7 @@ namespace Param
 
         static constexpr float FeedbackMin { -1.f };
         static constexpr float FeedbackMax { 1.f };
-        static constexpr float FeedbackInc { 0.1f };
+        static constexpr float FeedbackInc { 0.01f };
         static constexpr float FeedbackSkw { 1.f };
 
         static constexpr float TimeMin{ 20.f };
@@ -55,12 +55,12 @@ namespace Param
 
         static constexpr float DepthMin{ 0.f };
         static constexpr float DepthMax{ 5.f };
-        static constexpr float DepthInc{ 0.1f };
+        static constexpr float DepthInc{ 0.01f };
         static constexpr float DepthSkw{ 0.7f };
 
         static constexpr float CrossMin{ 0.f };
         static constexpr float CrossMax{ 1.f };
-        static constexpr float CrossInc{ 0.1f };
+        static constexpr float CrossInc{ 0.01f };
         static constexpr float CrossSkw{ 0.5f };
 
         static const juce::String EnabledOff { "Off" };

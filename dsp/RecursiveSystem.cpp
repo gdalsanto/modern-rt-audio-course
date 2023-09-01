@@ -12,7 +12,8 @@ RecursiveSystem::RecursiveSystem(float maxTimeMs, unsigned int numChannels) :
 delayLine(static_cast<unsigned int>(std::ceil(std::fmax(maxTimeMs, 1.f) * 0.001f * sampleRate)), numChannels),
 modDepthRamp(0.05f),
 feedbackRampA(0.05f),
-feedbackRampB(0.05f)
+feedbackRampB(0.05f),
+delayCrossFeed(0.f)
 {
     delayLine.setDelaySamplesA(1);
     delayLine.setDelaySamplesB(1);
@@ -32,6 +33,8 @@ void RecursiveSystem::prepare(double newSampleRate, float maxTimeMs, unsigned in
     modDepthRamp.prepare(sampleRate, true, modDepthMs * static_cast<float>(D_SIZE * sampleRate));
     feedbackRampA.prepare(sampleRate, true, feedbackA);
     feedbackRampB.prepare(sampleRate, true, feedbackB);
+    crossfeedRamp.prepare(sampleRate, true, delayCrossFeed);
+
     
     phaseState[0] = 0.f;
     phaseState[1] = static_cast<float>(M_PI / 2.0);
@@ -103,7 +106,7 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
 
         // Process delay
         delayLine.process(feedbackState, x, lfo, 2);
-        delayLine.setDelaySamplesA(1);
+        //delayLine.setDelaySamplesA(1);
         
         
         // Write to output buffers
@@ -111,8 +114,8 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
         output[1][n] = feedbackState[1];
         
         // Cross feed delay
-        feedbackState[0] += delayCrossFeed * feedbackState[1];
-        feedbackState[1] += delayCrossFeed * feedbackState[0];
+        feedbackState[0] = ( 1.f - delayCrossFeed ) * feedbackState[0] + delayCrossFeed * feedbackState[1];
+        feedbackState[1] = ( 1.f - delayCrossFeed ) * feedbackState[1] + delayCrossFeed * feedbackState[0];
 
     }
 }
@@ -121,6 +124,7 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
 void RecursiveSystem::setDelayCrossFeed(float newCrossFeed)
 {
     delayCrossFeed = std::max(std::min(newCrossFeed, 0.99f), 0.f);
+    crossfeedRamp.setTarget(delayCrossFeed);
 }
 
 
@@ -137,7 +141,7 @@ void RecursiveSystem::setOffsetB(float newOffsetMs)
     // Since the fixed delay is set to 1ms
     // We can deduct that from the offset ramp
     offsetBMs = std::fmax(newOffsetMs - 1.f, 0.f);
-    offsetBRamp.setTarget(offsetAMs * static_cast<float>(0.001 * sampleRate));
+    offsetBRamp.setTarget(offsetBMs * static_cast<float>(0.001 * sampleRate));
 }
 
 void RecursiveSystem::setDepth(float newDepthMs)

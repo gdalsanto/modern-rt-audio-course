@@ -74,6 +74,8 @@ private:
     mrta::Ramp<float> modDepthRamp;
     mrta::Ramp<float> feedbackRampA;
     mrta::Ramp<float> feedbackRampB;
+    
+    mrta::Ramp<float> crossfeedRamp;
 
     float phaseState[2] { 0.f, 0.f };
     float phaseInc { 0.f };
