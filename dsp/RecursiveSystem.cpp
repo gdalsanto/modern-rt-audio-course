@@ -5,7 +5,7 @@
   #define M_PI 3.14159265358979323846
 #endif
 
-#define D_SIZE 0.002
+#define D_SIZE 1
 namespace mrta
 {
 RecursiveSystem::RecursiveSystem(float maxTimeMs, unsigned int numChannels) :

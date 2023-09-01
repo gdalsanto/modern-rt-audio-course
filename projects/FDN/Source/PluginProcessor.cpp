@@ -43,11 +43,13 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
         [this](float newValue, bool /*force*/)
         {
+            DBG(Param::Name::Feedback_Gain_L + ": " + juce::String{ newValue });
             recSys.setFeedbackGainA(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_R,
         [this](float newValue, bool /*force*/)
         {
+            DBG(Param::Name::Feedback_Gain_R + ": " + juce::String{ newValue });
             recSys.setFeedbackGainB(newValue);
         });
 }
