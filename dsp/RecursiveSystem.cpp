@@ -104,12 +104,24 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
         // Process delay
         delayLine.process(feedbackState, x, lfo, 2);
         delayLine.setDelaySamplesA(1);
+        
+        
         // Write to output buffers
         output[0][n] = feedbackState[0];
         output[1][n] = feedbackState[1];
+        
+        // Cross feed delay
+        feedbackState[0] += delayCrossFeed * feedbackState[1];
+        feedbackState[1] += delayCrossFeed * feedbackState[0];
+
     }
 }
 
+
+void RecursiveSystem::setDelayCrossFeed(float newCrossFeed)
+{
+    delayCrossFeed = std::max(std::min(newCrossFeed, 0.99f), 0.f);
+}
 
 
 void RecursiveSystem::setOffsetA(float newOffsetMs)

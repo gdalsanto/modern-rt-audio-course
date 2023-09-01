@@ -60,6 +60,9 @@ public:
     
     void setDelaySamplesA(float time);
     void setDelaySamplesB(float time);
+    
+    // set delay cross feed
+    void setDelayCrossFeed(float newCrossFeed);
 
 private:
     double sampleRate { 48000.0 };
@@ -81,6 +84,7 @@ private:
     float feedbackA { 0.f };    // feedback from A to B
     float feedbackB { 0.f };    // feedback from B to A
     float modRate { 0.f };
+    float delayCrossFeed { 0.f };
 
     ModulationType modType { Sin };
 
