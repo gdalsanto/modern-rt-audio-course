@@ -84,8 +84,7 @@ private:
 
     ModulationType modType { Sin };
 
-    float feedbackStateA[2] { 0.f, 0.f };
-    float feedbackStateB[2] { 0.f, 0.f };
+    float feedbackState[4] { 0.f, 0.f , 0.f, 0.f};
 
 };
 

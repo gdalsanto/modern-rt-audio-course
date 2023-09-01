@@ -37,10 +37,10 @@ void RecursiveSystem::prepare(double newSampleRate, float maxTimeMs, unsigned in
     phaseState[1] = static_cast<float>(M_PI / 2.0);
     phaseInc = static_cast<float>(2.0 * M_PI / sampleRate) * modRate;
 
-    feedbackStateA[0] = 0.f;
-    feedbackStateA[1] = 0.f;
-    feedbackStateB[0] = 0.f;
-    feedbackStateB[1] = 0.f;
+    feedbackState[0] = 0.f;
+    feedbackState[1] = 0.f;
+    feedbackState[2] = 0.f;
+    feedbackState[3] = 0.f;
 }
 
 void RecursiveSystem::clear()
@@ -48,10 +48,10 @@ void RecursiveSystem::clear()
     // clear delay line
     delayLine.clear();
     // clear feedback states
-    feedbackStateA[0] = 0.f;
-    feedbackStateA[1] = 0.f;
-    feedbackStateB[0] = 0.f;
-    feedbackStateB[1] = 0.f;
+    feedbackState[0] = 0.f;
+    feedbackState[1] = 0.f;
+    feedbackState[2] = 0.f;
+    feedbackState[3] = 0.f;
 }
 
 
@@ -89,8 +89,8 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
         offsetBRamp.applySum(&lfo[1], 1);
 
         // Process feedback gain ramp
-        feedbackRampA.applyGain(&feedbackStateA[0], 1);
-        feedbackRampB.applyGain(&feedbackStateA[1], 1);
+        feedbackRampA.applyGain(&feedbackState[0], 1);
+        feedbackRampB.applyGain(&feedbackState[1], 1);
         
         // Read inputs
 //        float x[2] { 0.f, 0.f };
@@ -98,16 +98,15 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
 //            x[ch] = input[ch][n] + feedbackState[ch];
         // for now we use only the first state since
         float x[2] { 0.f, 0.f};
-        x[0] = input[0][n] + feedbackStateA[0] + feedbackStateA[1];
+        x[0] = input[0][n] + feedbackState[0] + feedbackState[1];
         x[1] = x[0];
 
         // Process delay
-        //float feedbackState[2] { feedbackStateA[0], feedbackStateB[0] };
-        delayLine.process(feedbackStateA, x, lfo, 2);
+        delayLine.process(feedbackState, x, lfo, 2);
         delayLine.setDelaySamplesA(1);
         // Write to output buffers
-        output[0][n] = feedbackStateA[0];
-        output[1][n] = feedbackStateA[1];
+        output[0][n] = feedbackState[0];
+        output[1][n] = feedbackState[1];
     }
 }
 
