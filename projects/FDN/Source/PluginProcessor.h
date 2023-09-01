@@ -23,6 +23,7 @@ namespace Param
         static const juce::String Feedback_Gain_L { "feedback_gain_l" };
         static const juce::String Feedback_Gain_R { "feedback_gain_r" };
         static const juce::String Mod_Type { "mod_type" };
+        static const juce::String Crossfeed{ "crossfeed" };
 
     }
 
@@ -34,7 +35,7 @@ namespace Param
         static const juce::String Feedback_Gain_L{ "Feedback Gain L" };
         static const juce::String Feedback_Gain_R{ "Feedback Gain R" };
         static const juce::String Mod_Type { "Modulation Type" };
-
+        static const juce::String Crossfeed{ "Crossfeed" };
     }
 
     namespace Ranges
@@ -49,6 +50,11 @@ namespace Param
         static constexpr float TimeMax{ 2000.f };
         static constexpr float TimeInc{ 1.f };
         static constexpr float TimeSkw{ 0.5f };
+
+        static constexpr float CrossMin{ 0.f };
+        static constexpr float CrossMax{ 1.f };
+        static constexpr float CrossInc{ 0.1f };
+        static constexpr float CrossSkw{ 0.5f };
 
         static const juce::String EnabledOff { "Off" };
         static const juce::String EnabledOn { "On" };

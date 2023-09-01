@@ -16,7 +16,9 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
     { Param::ID::Time_R,  Param::Name::Time_R, Param::Units::ms, 1000.f, Param::Ranges::TimeMin, Param::Ranges::TimeMax, Param::Ranges::TimeInc, Param::Ranges::TimeSkw },
     { Param::ID::Feedback_Gain_R,  Param::Name::Feedback_Gain_L, Param::Units::none, 0.2f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
     { Param::ID::Feedback_Gain_L,  Param::Name::Feedback_Gain_R, Param::Units::none, 0.2f, Param::Ranges::FeedbackMin, Param::Ranges::FeedbackMax, Param::Ranges::FeedbackInc, Param::Ranges::FeedbackSkw },
-    { Param::ID::Mod_Type,  Param::Name::Mod_Type,  Param::Ranges::ModLabels, 0 }
+    { Param::ID::Mod_Type,  Param::Name::Mod_Type,  Param::Ranges::ModLabels, 0 },
+    { Param::ID::Crossfeed,  Param::Name::Crossfeed, Param::Units::none, 0.f, Param::Ranges::CrossMin, Param::Ranges::CrossMax, Param::Ranges::CrossInc, Param::Ranges::CrossSkw }
+
 };
 //==============================================================================
 
@@ -58,6 +60,12 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
         {
             mrta::RecursiveSystem::ModulationType modType = static_cast<mrta::RecursiveSystem::ModulationType>(std::round(newValue));
             recSys.setModulationType(std::min(std::max(modType, mrta::RecursiveSystem::Sin), mrta::RecursiveSystem::Saw));
+        });
+    parameterManager.registerParameterCallback(Param::ID::Crossfeed,
+        [this](float newValue, bool /*force*/)
+        {
+            DBG(Param::Name::Crossfeed + ": " + juce::String{ newValue });
+            recSys.setDelayCrossFeed(newValue);
         });
 }
 
