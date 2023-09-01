@@ -20,7 +20,7 @@ static const std::vector<mrta::ParameterInfo> ParameterInfos
 //==============================================================================
 
 
-FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), recSys(20.f, 2), enableRamp(0.05f)
+FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::projectName, ParameterInfos), recSys(1000.f, 2), enableRamp(0.05f)
 {
     parameterManager.registerParameterCallback(Param::ID::Enabled,
         [this](float newValue, bool force)
@@ -32,13 +32,13 @@ FDNAudioProcessor::FDNAudioProcessor() : parameterManager(*this, ProjectInfo::pr
         [this](float newValue, bool /*force*/)
         {
             DBG(Param::Name::Time_L + ": " + juce::String{ newValue });
-            recSys.setDelaySamplesA(newValue);
+            recSys.setOffsetA(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Time_R,
         [this](float newValue, bool /*force*/)
         {
             DBG(Param::Name::Time_R + ": " + juce::String{ newValue });
-            recSys.setDelaySamplesB(newValue);
+            recSys.setOffsetB(newValue);
         });
     parameterManager.registerParameterCallback(Param::ID::Feedback_Gain_L,
         [this](float newValue, bool /*force*/)
@@ -127,7 +127,7 @@ void FDNAudioProcessor::prepareToPlay (double newSampleRate, int samplesPerBlock
     // initialisation that you need..
     const unsigned int numChannels { static_cast<unsigned int>(std::max(getMainBusNumInputChannels(), getMainBusNumOutputChannels())) };
 
-    recSys.prepare(newSampleRate, 20.f, numChannels);
+    recSys.prepare(newSampleRate, 1000.f, numChannels);
     enableRamp.prepare(newSampleRate);
 
     parameterManager.updateParameters(true);

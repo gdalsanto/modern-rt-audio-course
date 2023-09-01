@@ -40,7 +40,10 @@ public:
     void process(float* const* output, const float* const* input, unsigned int numChannels, unsigned int numSamples);
 
     // Set delay offset in ms
-    void setOffset(float newOffsetMs);
+    void setOffsetA(float newOffsetMs);
+
+    // Set delay offset in ms
+    void setOffsetB(float newOffsetMs);
 
     // Set modulation depth in ms
     void setDepth(float newDepthMs);
@@ -63,7 +66,8 @@ private:
 
     mrta::FancyDelayLine delayLine;
 
-    mrta::Ramp<float> offsetRamp;
+    mrta::Ramp<float> offsetARamp;
+    mrta::Ramp<float> offsetBRamp;
     mrta::Ramp<float> modDepthRamp;
     mrta::Ramp<float> feedbackRampA;
     mrta::Ramp<float> feedbackRampB;
@@ -71,7 +75,8 @@ private:
     float phaseState[2] { 0.f, 0.f };
     float phaseInc { 0.f };
 
-    float offsetMs { 0.f };
+    float offsetAMs { 0.f };
+    float offsetBMs { 0.f };
     float modDepthMs { 0.f };
     float feedbackA { 0.f };    // feedback from A to B
     float feedbackB { 0.f };    // feedback from B to A

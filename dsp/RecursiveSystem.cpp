@@ -9,24 +9,26 @@
 namespace mrta
 {
 RecursiveSystem::RecursiveSystem(float maxTimeMs, unsigned int numChannels) :
-delayLine(static_cast<unsigned int>(std::ceil(std::fmax(maxTimeMs, 1.f) * sampleRate)), numChannels),
-offsetRamp(0.05f),
+delayLine(static_cast<unsigned int>(std::ceil(std::fmax(maxTimeMs, 1.f) * 0.001f * sampleRate)), numChannels),
 modDepthRamp(0.05f),
 feedbackRampA(0.05f),
 feedbackRampB(0.05f)
-{    
+{
+    delayLine.setDelaySamplesA(1);
+    delayLine.setDelaySamplesB(1);
 }
 
 void RecursiveSystem::prepare(double newSampleRate, float maxTimeMs, unsigned int numChannels)
 {
     sampleRate = newSampleRate;
 
-    delayLine.prepare(static_cast<unsigned int>(std::round(maxTimeMs * static_cast<float>(D_SIZE * sampleRate))), numChannels);
+    delayLine.prepare(static_cast<unsigned int>(std::round(maxTimeMs * static_cast<float>(0.001f * sampleRate))), numChannels);
     
     // set fixed delay time to max
     delayLine.setDelaySamplesA(static_cast<unsigned int>(std::ceil(D_SIZE * sampleRate)));
     delayLine.setDelaySamplesB(static_cast<unsigned int>(std::ceil(D_SIZE * sampleRate)));
-    offsetRamp.prepare(sampleRate, true, offsetMs * static_cast<float>(D_SIZE * sampleRate));
+    offsetARamp.prepare(sampleRate, true, offsetAMs * static_cast<float>(D_SIZE * sampleRate));
+    offsetBRamp.prepare(sampleRate, true, offsetBMs * static_cast<float>(D_SIZE * sampleRate));
     modDepthRamp.prepare(sampleRate, true, modDepthMs * static_cast<float>(D_SIZE * sampleRate));
     feedbackRampA.prepare(sampleRate, true, feedbackA);
     feedbackRampB.prepare(sampleRate, true, feedbackB);
@@ -83,11 +85,12 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
 
         // Apply mod depth and offset ramps
         modDepthRamp.applyGain(lfo, numChannels);
-        offsetRamp.applySum(lfo, numChannels);
+        offsetARamp.applySum(&lfo[0], 1);
+        offsetBRamp.applySum(&lfo[1], 1);
 
         // Process feedback gain ramp
-        feedbackRampA.applyGain(feedbackStateA, numChannels);
-        feedbackRampB.applyGain(feedbackStateB, numChannels);
+        feedbackRampA.applyGain(&feedbackStateA[0], 1);
+        feedbackRampB.applyGain(&feedbackStateA[1], 1);
         
         // Read inputs
 //        float x[2] { 0.f, 0.f };
@@ -95,27 +98,35 @@ void RecursiveSystem::process(float* const* output, const float* const* input, u
 //            x[ch] = input[ch][n] + feedbackState[ch];
         // for now we use only the first state since
         float x[2] { 0.f, 0.f};
-        x[0] = input[0][n] + feedbackStateB[0] + feedbackStateA[0];
+        x[0] = input[0][n] + feedbackStateA[0] + feedbackStateA[1];
         x[1] = x[0];
 
         // Process delay
-        float feedbackState[2] { feedbackStateA[0], feedbackStateB[0] };
-        delayLine.process(feedbackState, x, lfo, numChannels);
-
+        //float feedbackState[2] { feedbackStateA[0], feedbackStateB[0] };
+        delayLine.process(feedbackStateA, x, lfo, 2);
+        delayLine.setDelaySamplesA(1);
         // Write to output buffers
         output[0][n] = feedbackStateA[0];
-        output[1][n] = feedbackStateB[0];
+        output[1][n] = feedbackStateA[1];
     }
 }
 
 
 
-void RecursiveSystem::setOffset(float newOffsetMs)
+void RecursiveSystem::setOffsetA(float newOffsetMs)
 {
     // Since the fixed delay is set to 1ms
     // We can deduct that from the offset ramp
-    offsetMs = std::fmax(newOffsetMs - 1.f, 0.f);
-    offsetRamp.setTarget(offsetMs * static_cast<float>(D_SIZE * sampleRate));
+    offsetAMs = std::fmax(newOffsetMs - 1.f, 0.f);
+    offsetARamp.setTarget(offsetAMs * static_cast<float>(D_SIZE * sampleRate));
+}
+
+void RecursiveSystem::setOffsetB(float newOffsetMs)
+{
+    // Since the fixed delay is set to 1ms
+    // We can deduct that from the offset ramp
+    offsetBMs = std::fmax(newOffsetMs - 1.f, 0.f);
+    offsetBRamp.setTarget(offsetAMs * static_cast<float>(D_SIZE * sampleRate));
 }
 
 void RecursiveSystem::setDepth(float newDepthMs)
